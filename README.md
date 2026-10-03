@@ -88,177 +88,26 @@ CodeForge AI follows a client-server architecture with a Streamlit frontend and 
 
 ---
 
-## Getting Started & Run Commands
+## How to Run
 
-Follow the steps below to set up and run CodeForge AI locally.
-
-### 1. Prerequisites
-
-- **Python**: 3.10 or higher
-- **Node.js** *(Optional)*: Required for running JavaScript code
-- **Java JDK** *(Optional)*: Required for running Java code
-
----
-
-### 2. Clone Repository & Setup Virtual Environment
-
+### 1. Activate Environment
 ```bash
-# Clone the repository
-git clone https://github.com/Rou7250/AI-Powered-Mini-IDE.git
-cd AI-Powered-Mini-IDE
+# Windows (PowerShell)
+.venv\Scripts\activate
+
+# Windows (CMD)
+.venv\Scripts\activate.bat
+
+# macOS / Linux
+source .venv/bin/activate
 ```
 
-#### Create and Activate Virtual Environment:
-
-- **On Windows (PowerShell):**
-  ```powershell
-  python -m venv .venv
-  .venv\Scripts\Activate.ps1
-  ```
-
-- **On Windows (Command Prompt):**
-  ```cmd
-  python -m venv .venv
-  .venv\Scripts\activate.bat
-  ```
-
-- **On macOS / Linux:**
-  ```bash
-  python3 -m venv .venv
-  source .venv/bin/activate
-  ```
-
----
-
-### 3. Install Dependencies
-
-Install all required Python packages:
-
-```bash
-pip install --upgrade pip
-pip install -r requirements.txt
-```
-
----
-
-### 4. Configure Environment Variables
-
-Create your `.env` configuration file from the template:
-
-- **Windows (PowerShell):**
-  ```powershell
-  Copy-Item .env.example .env
-  ```
-- **macOS / Linux / Git Bash:**
-  ```bash
-  cp .env.example .env
-  ```
-
-Open `.env` in an editor and configure your LLM settings:
-```ini
-# LLM Provider: "anthropic", "openai", or leave blank for mock mode
-LLM_PROVIDER=anthropic
-LLM_API_KEY=your_api_key_here
-LLM_MODEL=claude-sonnet-4-5
-
-# Backend URL used by the frontend
-BACKEND_URL=http://localhost:8000
-```
-> **Tip:** If no `LLM_API_KEY` is provided, CodeForge AI automatically falls back to **Mock LLM mode**, allowing you to test UI and workflows without API costs.
-
----
-
-### 5. Run the Application
-
-The system requires two processes running: the **FastAPI Backend** and the **Streamlit Frontend**.
-
-#### Option A: Running in Two Separate Terminals (Recommended)
-
-**Terminal 1 — Start the Backend (FastAPI):**
+### 2. Run Backend
 ```bash
 uvicorn backend.main:app --reload --port 8000
 ```
-*Or using the module syntax:*
-```bash
-python -m uvicorn backend.main:app --reload --port 8000
-```
 
-**Terminal 2 — Start the Frontend (Streamlit):**
+### 3. Run Frontend
 ```bash
 streamlit run frontend/app.py
-```
-*Or using the module syntax:*
-```bash
-python -m streamlit run frontend/app.py
-```
-
----
-
-#### Option B: Quick Start (Single Command / Background)
-
-- **Windows (PowerShell - starts backend and frontend in separate windows):**
-  ```powershell
-  Start-Process powershell -ArgumentList "-NoExit", "-Command", "uvicorn backend.main:app --reload --port 8000"
-  Start-Process powershell -ArgumentList "-NoExit", "-Command", "streamlit run frontend/app.py"
-  ```
-
-- **macOS / Linux (Background with output):**
-  ```bash
-  uvicorn backend.main:app --reload --port 8000 & streamlit run frontend/app.py
-  ```
-
----
-
-### 6. Accessing the Application
-
-Once both servers are running:
-
-| Service | URL | Description |
-|---|---|---|
-| **Frontend Web IDE** | [http://localhost:8501](http://localhost:8501) | Main user interface (Code editor, terminal, AI chat, agent) |
-| **Backend API Docs** | [http://localhost:8000/docs](http://localhost:8000/docs) | Interactive Swagger UI documentation |
-| **Backend Health Check** | [http://localhost:8000/api/health](http://localhost:8000/api/health) | API and LLM status verification |
-
----
-
-### 7. Running Tests
-
-Run the test suite with `pytest`:
-
-```bash
-# Run all tests
-pytest
-
-# Run tests with verbose output
-pytest -v
-
-# Run a specific test suite
-pytest tests/test_execution.py
-pytest tests/test_agent.py
-pytest tests/test_rag_indexing.py
-```
-
----
-
-### 8. Project Structure
-
-```text
-├── backend/
-│   ├── main.py              # FastAPI application entrypoint
-│   ├── config.py            # Environment & application settings
-│   ├── security.py          # Path validation & sandbox controls
-│   ├── logging_config.py    # Structured logging setup
-│   ├── agent/               # Autonomous ReAct agent (tools, planner, patch)
-│   ├── ai/                  # LLM integrations & context router
-│   ├── execution/           # Code execution runners (Python, JS, Java)
-│   ├── models/              # Pydantic schemas
-│   ├── rag/                 # Chunker, embeddings, indexer, ChromaDB retriever
-│   └── routes/              # FastAPI endpoints (/code, /project, /ai, /agent)
-├── frontend/
-│   ├── app.py               # Streamlit application entrypoint
-│   ├── components/          # UI modules (editor, chat, terminal, agent, sidebar)
-│   └── services/            # Backend API client
-├── tests/                   # Automated pytest suites
-├── requirements.txt         # Project dependencies
-└── README.md                # Documentation
 ```
