@@ -1,0 +1,17 @@
+.env
+__pycache__/
+*.pyc
+*.class
+.venv/
+venv/
+chroma_data/
+.pytest_cache/
+.DS_Store
+node_modules/
+dist/
+build/
+.codeforge_backups/
+*.manifest.json
+.env.local
+tools/
+tools/jdk/
